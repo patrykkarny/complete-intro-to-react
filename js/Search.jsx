@@ -1,19 +1,53 @@
-import React from 'react';
+import React, { Component } from 'react';
 import preload from '../data.json';
 
-const Search = () => (
-  <div className="search">
-    {preload.shows.map(show => (
-      <div className="show-card">
-        <img src={`/public/img/posters/${show.poster}`} alt={`${show.title} Show Poster`} />
-        <div>
-          <h3>{show.title}</h3>
-          <h4>({show.year})</h4>
-          <p>{show.description}</p>
-        </div>
+import ShowCard from './ShowCard';
+
+class Search extends Component {
+  // constructor(props) {
+  //   super(props);
+
+  //   this.state = {
+  //     searchTerm: 'debug statement',
+  //   };
+
+  //   this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
+  // }
+
+  // handleSearchTermChange() {
+  //   this.setState({ searchTerm: event.target.value });
+  // };
+
+  state = {
+    searchTerm: '',
+  };
+
+  handleSearchTermChange = event => {
+    this.setState({ searchTerm: event.target.value });
+  };
+
+  render() {
+    return (
+      <div className="search">
+        <header>
+          <h1>svideo</h1>
+          <input
+            onChange={this.handleSearchTermChange}
+            value={this.state.searchTerm}
+            type="text"
+            placeholder="Search"
+          />
+        </header>
+
+        {preload.shows
+          .filter(
+            show => `${show.title} ${show.description}`.toUpperCase().indexOf(this.state.searchTerm.toUpperCase()) >= 0
+          )
+          .map(show => <ShowCard key={show.imdbID} {...show} />)}
+
       </div>
-    ))}
-  </div>
-);
+    );
+  }
+}
 
 export default Search;

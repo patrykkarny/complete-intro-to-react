@@ -510,7 +510,7 @@ html {
   min-width: 1400px;
 }
 
-.search > div {
+.search {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
