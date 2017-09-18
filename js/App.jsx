@@ -15,7 +15,10 @@ const FourOhFour = () => <h1>404</h1>;
 const SearchWithShows = props => <Search shows={preload.shows} {...props} />;
 
 const DetailCard = (props: { match: Match }) => (
-  <Details show={preload.shows.find(show => show.imdbID === props.match.params.id)} {...props} />
+  <Details
+    show={preload.shows.find(show => show.imdbID === props.match.params.id)}
+    {...props}
+  />
 );
 
 const App = () => (
