@@ -3,6 +3,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import type { Match } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 import Landing from './Landing';
 import Search from './Search';
 import Details from './Details';
@@ -18,14 +20,16 @@ const DetailCard = (props: { match: Match }) => (
 
 const App = () => (
   <BrowserRouter>
-    <div className="app">
-      <Switch>
-        <Route exact path="/" component={Landing} />
-        <Route path="/search" component={SearchWithShows} />
-        <Route path="/details/:id" component={DetailCard} />
-        <Route component={FourOhFour} />
-      </Switch>
-    </div>
+    <Provider store={store}>
+      <div className="app">
+        <Switch>
+          <Route exact path="/" component={Landing} />
+          <Route path="/search" component={SearchWithShows} />
+          <Route path="/details/:id" component={DetailCard} />
+          <Route component={FourOhFour} />
+        </Switch>
+      </div>
+    </Provider>
   </BrowserRouter>
 );
 
