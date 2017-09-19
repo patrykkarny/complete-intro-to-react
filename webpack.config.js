@@ -14,10 +14,8 @@ module.exports = {
     publicPath: '/public/',
   },
   devServer: {
-    publicPath: '/public/',
-    compress: true,
     hot: true,
-    port: 9000,
+    publicPath: '/public/',
     historyApiFallback: true,
   },
   resolve: {
