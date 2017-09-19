@@ -15,7 +15,12 @@ const Header = (props: Props) => {
   let utilSpace;
   if (props.showSearch) {
     utilSpace = (
-      <input onChange={props.handleSearchTermChange} value={props.searchTerm} type="text" placeholder="Search" />
+      <input
+        onChange={props.handleSearchTermChange}
+        value={props.searchTerm}
+        type="text"
+        placeholder="Search"
+      />
     );
   } else {
     utilSpace = (
@@ -27,9 +32,7 @@ const Header = (props: Props) => {
   return (
     <header>
       <h1>
-        <Link to="/">
-          svideo
-        </Link>
+        <Link to="/">svideo</Link>
       </h1>
       {utilSpace}
     </header>
