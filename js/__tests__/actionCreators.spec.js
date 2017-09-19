@@ -1,6 +1,7 @@
 // @flow
 import moxios from 'moxios';
-import { setSearchTerm, addApiData, getApiDetails } from '../actionCreators';
+import { setSearchTerm, addApiData } from '../actionCreators';
+import getApiDetails from '../asyncActions';
 
 test('setSearchTerm', () => {
   expect(setSearchTerm('New Yord')).toMatchSnapshot();

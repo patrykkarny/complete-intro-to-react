@@ -1,39 +1,50 @@
 // @flow
 
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import type { Match } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
-import Landing from './Landing';
-import Search from './Search';
-import Details from './Details';
+import AsyncRoute from './AsyncRoute';
 import preload from '../data.json';
 
 const FourOhFour = () => <h1>404</h1>;
 
-const SearchWithShows = props => <Search shows={preload.shows} {...props} />;
+const AsyncLandingComponent = props => (
+  <AsyncRoute props={props} loadingPromise={import('./Landing')} />
+);
 
-const DetailCard = (props: { match: Match }) => (
-  <Details
-    show={preload.shows.find(show => show.imdbID === props.match.params.id)}
-    {...props}
+const AsyncSearchComponent = props => (
+  <AsyncRoute
+    props={Object.assign({ shows: preload.shows }, props)}
+    loadingPromise={import('./Search')}
+  />
+);
+
+const AsyncDetailsComponent = (props: { match: Match }) => (
+  <AsyncRoute
+    props={Object.assign(
+      {
+        show: preload.shows.find(show => show.imdbID === props.match.params.id),
+        match: {},
+      },
+      props
+    )}
+    loadingPromise={import('./Details')}
   />
 );
 
 const App = () => (
-  <BrowserRouter>
-    <Provider store={store}>
-      <div className="app">
-        <Switch>
-          <Route exact path="/" component={Landing} />
-          <Route path="/search" component={SearchWithShows} />
-          <Route path="/details/:id" component={DetailCard} />
-          <Route component={FourOhFour} />
-        </Switch>
-      </div>
-    </Provider>
-  </BrowserRouter>
+  <Provider store={store}>
+    <div className="app">
+      <Switch>
+        <Route exact path="/" component={AsyncLandingComponent} />
+        <Route path="/search" component={AsyncSearchComponent} />
+        <Route path="/details/:id" component={AsyncDetailsComponent} />
+        <Route component={FourOhFour} />
+      </Switch>
+    </div>
+  </Provider>
 );
 
 export default App;

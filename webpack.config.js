@@ -1,11 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
 
-module.exports = {
+const config = {
   context: __dirname,
   entry: [
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:9000',
+    'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
     './js/ClientApp.jsx',
   ],
@@ -16,11 +16,10 @@ module.exports = {
     publicPath: '/public/',
   },
   devServer: {
-    publicPath: '/public/',
-    compress: true,
     hot: true,
-    port: 9000,
+    publicPath: '/public/',
     historyApiFallback: true,
+    compress: true,
   },
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
@@ -30,7 +29,10 @@ module.exports = {
     reasons: true,
     chunks: true,
   },
-  plugins: [new webpack.HotModuleReplacementPlugin(), new webpack.NamedModulesPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+  ],
   module: {
     rules: [
       {
@@ -46,3 +48,13 @@ module.exports = {
     ],
   },
 };
+
+console.log(process.env.NODE_ENV);
+
+if (process.env.NODE_ENV === 'production') {
+  config.entry = './js/ClientApp.jsx';
+  config.devtool = false;
+  config.plugins = [];
+}
+
+module.exports = config;

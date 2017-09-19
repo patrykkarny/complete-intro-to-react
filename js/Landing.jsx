@@ -24,7 +24,7 @@ class Landing extends Component<Props, {}> {
     return (
       <div className="landing">
         <h1>svideo</h1>
-        <form omSubmit={this.goToSearch}>
+        <form onSubmit={this.goToSearch}>
           <input
             onChange={this.props.handleSearchTermChange}
             value={this.props.searchTerm}
