@@ -4,9 +4,7 @@ const webpack = require('webpack');
 module.exports = {
   context: __dirname,
   entry: [
-    'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:9000',
-    'webpack/hot/only-dev-server',
+    'webpack-hot-middleware/client?path=__webpack_hmr&timeout=2000',
     './js/ClientApp.jsx',
   ],
   devtool: 'cheap-eval-source-map',
@@ -30,7 +28,10 @@ module.exports = {
     reasons: true,
     chunks: true,
   },
-  plugins: [new webpack.HotModuleReplacementPlugin(), new webpack.NamedModulesPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+  ],
   module: {
     rules: [
       {
